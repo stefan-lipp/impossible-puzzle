@@ -11,14 +11,17 @@ struct Board {
     
     private(set) var fields: [Field] = []
     
-    init() {        
+    init(start: Position) {
         for row in 0..<17 {
             let numberOfColumns = numberOfColumns(inRow: row)
             for column in 0..<numberOfColumns {
                 let id = "\(row), \(column)"
-                fields.append(Field(id: id, row: row, column: column))
+                let isStart = start.row == row && start.column == column
+                let field = Field(id: id, row: row, column: column, isFilled: isStart)
+                fields.append(field)
             }
         }
+        
     }
     
     private func numberOfColumns(inRow row: Int) -> Int {

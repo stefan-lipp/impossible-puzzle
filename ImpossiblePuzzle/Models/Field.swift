@@ -9,9 +9,13 @@ import SwiftUI
 
 struct Field: Identifiable {
     
-    var id: String
-    var row: Int
-    var column: Int
-    var isFilled = false
+    let id: String
+    let position: Position
+    var isFilled: Bool
     
+    init(id: String, row: Int, column: Int, isFilled: Bool = false) {
+        self.id = id
+        self.position = Position(row: row, column: column)
+        self.isFilled = isFilled
+    }
 }

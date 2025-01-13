@@ -7,9 +7,13 @@
 import SwiftUI
 
 struct FieldView: View {
+    
+    let field: Field
+    
     var body: some View {
         Triangle()
             .frame(width: 70, height: 70)
+            .foregroundStyle(field.isFilled ? .brown : .secondary)
     }
 }
 
