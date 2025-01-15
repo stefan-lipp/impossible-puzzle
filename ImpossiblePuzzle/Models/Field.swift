@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct Field: Identifiable {
+struct Field: Identifiable, Equatable {
     
     let id: String
     let position: Position
     let type: FieldType
+    
     var isFilled: Bool
     
     init(id: String, position: Position, type: FieldType, isFilled: Bool = false) {
