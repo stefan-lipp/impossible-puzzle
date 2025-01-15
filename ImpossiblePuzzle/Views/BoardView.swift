@@ -14,7 +14,7 @@ struct BoardView: View {
     
     var body: some View {        
         VStack(spacing: -40) {
-            ForEach(0..<17) { row in
+            ForEach(0..<21) { row in
                 let rowFields = board.fields.filter { $0.position.row == row }
                 HStack {
                     ForEach(rowFields) { field in
@@ -24,4 +24,8 @@ struct BoardView: View {
             }
         }
     }
+}
+
+#Preview {
+    BoardView(board: Board(start: Position(row: 10, column: 2)))
 }

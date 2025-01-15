@@ -7,9 +7,12 @@
 
 import SwiftUI
 
-struct Position {
+struct Position: Equatable {
     
     let row: Int
     let column: Int
     
+    var description: String {
+        "(\(row),\(column))"
+    }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AppView: View {
     
-    private let board = Board(start: Position(row: 8, column: 2))
+    private let board = Board(start: Position(row: 10, column: 2))
     
     var body: some View {
         BoardView(board: board)

@@ -11,11 +11,19 @@ struct Field: Identifiable {
     
     let id: String
     let position: Position
+    let type: FieldType
     var isFilled: Bool
     
-    init(id: String, row: Int, column: Int, isFilled: Bool = false) {
+    init(id: String, position: Position, type: FieldType, isFilled: Bool = false) {
         self.id = id
-        self.position = Position(row: row, column: column)
+        self.position = position
+        self.type = type
         self.isFilled = isFilled
     }
+}
+
+enum FieldType {
+    case inside
+    case border
+    case outside
 }

@@ -12,20 +12,15 @@ struct FieldView: View {
     
     var body: some View {
         Triangle()
-            .frame(width: 70, height: 70)
-            .foregroundStyle(field.isFilled ? .brown : .secondary)
+            .frame(width: 60, height: 60)
+            .foregroundStyle(foregroundColor)
     }
-}
-
-struct Triangle: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        
-        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
-        
-        return path
+    
+    private var foregroundColor: Color {
+        switch field.type {
+        case .outside: return .clear
+        case .border: return .brown.opacity(0.7)
+        case .inside: return .brown.opacity(field.isFilled ? 1 : 0.3)
+        }
     }
 }
