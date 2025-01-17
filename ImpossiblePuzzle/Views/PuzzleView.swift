@@ -16,8 +16,8 @@ struct PuzzleView: View {
             boardView
             
             HStack {
-                Button("Place Piece") {
-                    viewModel.place(onePiece)
+                Button("Place Pieces") {
+                    viewModel.placeAsManyPiecesAsPossible()
                 }
                 Button("Reset Puzzle") {
                     viewModel.reset()

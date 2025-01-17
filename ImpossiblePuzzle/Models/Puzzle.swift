@@ -10,25 +10,26 @@ import Foundation
 struct Puzzle {
     
     private(set) var fields: [Field] = []
-    private(set) var pieces: [Piece] = []
+    private(set) var placedPieces: [Piece] = []
+    private(set) var remainingPieces: [Piece] = pieces
     
     init() {
         reset()
     }
     
-    mutating func place(_ piece: Piece) -> Bool {
-        for field in fields {
-            guard field.type == .inside && !field.isFilled else { continue }
-            guard canPiece(piece, bePlacedAt: field.position) else { continue }
-            markFieldsAsFilled(for: piece, at: field.position)
-            pieces.append(piece)
-            return true
+    mutating func placeAsManyPiecesAsPossible() {
+        while let nextPiece = remainingPieces.first {
+            let couldPlaceNextPiece = place(nextPiece)
+            if !couldPlaceNextPiece { return }
+            placedPieces.append(nextPiece)
+            remainingPieces.removeFirst()
         }
-        return false
     }
     
     mutating func reset() {
         fields = []
+        placedPieces = []
+        remainingPieces = pieces
         let startPosition = Position(row: 10, column: 5)
         for row in 0...20 {
             let minColumn = row % 2 == 0 ? 1 : 0
@@ -44,6 +45,15 @@ struct Puzzle {
         }
     }
     
+    private mutating func place(_ piece: Piece) -> Bool {
+        for field in fields {
+            guard field.type == .inside && !field.isFilled else { continue }
+            guard canPiece(piece, bePlacedAt: field.position) else { continue }
+            markFieldsAsFilled(for: piece, at: field.position)
+            return true
+        }
+        return false
+    }
     
     private func canPiece(_ piece: Piece, bePlacedAt position: Position) -> Bool {
         for element in piece.elements {

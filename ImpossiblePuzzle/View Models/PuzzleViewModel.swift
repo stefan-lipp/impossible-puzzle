@@ -15,8 +15,8 @@ class PuzzleViewModel: ObservableObject {
         puzzle.fields
     }
     
-    func place(_ piece: Piece) {
-        let _ = puzzle.place(piece)
+    func placeAsManyPiecesAsPossible() {
+        let _ = puzzle.placeAsManyPiecesAsPossible()
     }
     
     func reset() {
