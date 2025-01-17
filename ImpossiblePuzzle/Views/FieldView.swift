@@ -11,8 +11,8 @@ struct FieldView: View {
     let field: Field
     
     var body: some View {
-        Triangle()
-            .frame(width: 60, height: 60)
+        FieldShape()
+            .frame(width: 50, height: 50)
             .foregroundStyle(foregroundColor)
     }
     
@@ -20,7 +20,7 @@ struct FieldView: View {
         switch field.type {
         case .outside: return .clear
         case .border: return .brown.opacity(0.7)
-        case .inside: return .brown.opacity(field.isFilled ? 1 : 0.3)
+        case .inside: return .brown.opacity(field.isFilled ? 0.3 : 1)
         }
     }
 }

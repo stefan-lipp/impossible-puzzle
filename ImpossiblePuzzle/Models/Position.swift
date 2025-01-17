@@ -15,4 +15,8 @@ struct Position: Equatable {
     var description: String {
         "(\(row),\(column))"
     }
+    
+    static func + (lhs: Position, rhs: Position) -> Position {
+        Position(row: lhs.row + rhs.row, column: lhs.column + rhs.column)
+    }
 }

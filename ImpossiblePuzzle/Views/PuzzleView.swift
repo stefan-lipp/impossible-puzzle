@@ -16,8 +16,8 @@ struct PuzzleView: View {
             boardView
             
             HStack {
-                Button("Place Long Piece") {
-                    viewModel.place(longPiece)
+                Button("Place Piece") {
+                    viewModel.place(onePiece)
                 }
                 Button("Reset Puzzle") {
                     viewModel.reset()
@@ -32,10 +32,10 @@ struct PuzzleView: View {
     }
     
     private var boardView: some View {
-        VStack(spacing: -40) {
+        VStack(spacing: -30) {
             ForEach(0..<21) { row in
                 let rowFields = viewModel.fields.filter { $0.position.row == row }
-                HStack {
+                HStack(spacing: 22) {
                     ForEach(rowFields) { field in
                         FieldView(field: field)
                     }

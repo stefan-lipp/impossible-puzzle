@@ -13,7 +13,7 @@ struct Puzzle {
     private(set) var pieces: [Piece] = []
     
     init() {
-        setupFields()
+        reset()
     }
     
     mutating func place(_ piece: Piece) -> Bool {
@@ -28,10 +28,6 @@ struct Puzzle {
     }
     
     mutating func reset() {
-        setupFields()
-    }
-    
-    private mutating func setupFields() {
         fields = []
         let startPosition = Position(row: 10, column: 5)
         for row in 0...20 {
@@ -51,8 +47,7 @@ struct Puzzle {
     
     private func canPiece(_ piece: Piece, bePlacedAt position: Position) -> Bool {
         for element in piece.elements {
-            let elementPosition = Position(row: position.row + element.offset.row, column: position.column + element.offset.column)
-            guard let field = fields.first(where: { $0.position == elementPosition }) else { return false }
+            guard let field = fields.first(where: { $0.position == position + element.offset }) else { return false }
             guard field.type == .inside && !field.isFilled else { return false }
         }
         return true
@@ -60,8 +55,7 @@ struct Puzzle {
     
     private mutating func markFieldsAsFilled(for piece: Piece, at position: Position) {
         for element in piece.elements {
-            let elementPosition = Position(row: position.row + element.offset.row, column: position.column + element.offset.column)
-            guard let index = fields.firstIndex(where: { $0.position == elementPosition }) else { return }
+            guard let index = fields.firstIndex(where: { $0.position == position + element.offset }) else { return }
             fields[index].isFilled = true
         }
     }

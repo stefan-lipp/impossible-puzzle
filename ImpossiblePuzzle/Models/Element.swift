@@ -9,10 +9,10 @@ import SwiftUI
 
 struct Element: Identifiable {
     
-    let id: String
+    let id: Int
     let offset: Position
     
-    init(id: String, row: Int, column: Int) {
+    init(id: Int, row: Int, column: Int) {
         self.id = id
         self.offset = Position(row: row, column: column)
     }

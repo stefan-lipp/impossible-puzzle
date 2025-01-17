@@ -10,6 +10,6 @@ import SwiftUI
 struct Piece: Identifiable {
     
     let id: String
-    let position: Position
     let elements: [Element]
+    let position = Position(row: 0, column: 0)
 }
