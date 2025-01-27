@@ -10,26 +10,13 @@ import Foundation
 struct Puzzle {
     
     private(set) var fields: [Field] = []
-    private(set) var placedPieces: [Piece] = []
-    private(set) var remainingPieces: [Piece] = pieces
     
     init() {
         reset()
     }
     
-    mutating func placeAsManyPiecesAsPossible() {
-        while let nextPiece = remainingPieces.first {
-            let couldPlaceNextPiece = place(nextPiece)
-            if !couldPlaceNextPiece { return }
-            placedPieces.append(nextPiece)
-            remainingPieces.removeFirst()
-        }
-    }
-    
     mutating func reset() {
         fields = []
-        placedPieces = []
-        remainingPieces = pieces
         let startPosition = Position(row: 10, column: 5)
         for row in 0...20 {
             let minColumn = row % 2 == 0 ? 1 : 0
@@ -45,14 +32,22 @@ struct Puzzle {
         }
     }
     
-    private mutating func place(_ piece: Piece) -> Bool {
+    mutating func place(_ piece: Piece) -> Position? {
         for field in fields {
             guard field.type == .inside && !field.isFilled else { continue }
             guard canPiece(piece, bePlacedAt: field.position) else { continue }
             markFieldsAsFilled(for: piece, at: field.position)
-            return true
+            return field.position
         }
-        return false
+        return nil
+    }
+    
+    mutating func remove(_ piece: Piece) {
+        for field in fields {
+            guard field.type == .inside && field.isFilled else { continue }
+            guard isPiece(piece, placedAt: field.position) else { continue }
+            markFieldAsNotFilled(at: field.position)
+        }
     }
     
     private func canPiece(_ piece: Piece, bePlacedAt position: Position) -> Bool {
@@ -63,6 +58,13 @@ struct Puzzle {
         return true
     }
     
+    private func isPiece(_ piece: Piece, placedAt position: Position) -> Bool {
+        for element in piece.elements {
+            if piece.position + element.offset == position { return true }
+        }
+        return false
+    }
+    
     private mutating func markFieldsAsFilled(for piece: Piece, at position: Position) {
         for element in piece.elements {
             guard let index = fields.firstIndex(where: { $0.position == position + element.offset }) else { return }
@@ -70,6 +72,10 @@ struct Puzzle {
         }
     }
     
+    private mutating func markFieldAsNotFilled(at position: Position) {
+        guard let index = fields.firstIndex(where: { $0.position == position }) else { return }
+        fields[index].isFilled = false
+    }
     
     private func fieldType(for position: Position) -> FieldType {
         if isBorder(position) { return .border }

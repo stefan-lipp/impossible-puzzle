@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Position: Equatable {
+struct Position: Equatable, Hashable {
     
     let row: Int
     let column: Int

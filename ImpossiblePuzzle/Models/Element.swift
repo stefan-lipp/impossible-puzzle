@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Element: Identifiable {
+struct Element: Identifiable, Hashable {
     
     let id: Int
     let offset: Position

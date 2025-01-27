@@ -16,10 +16,10 @@ struct PuzzleView: View {
             boardView
             
             HStack {
-                Button("Place Pieces") {
-                    viewModel.placeAsManyPiecesAsPossible()
+                Button("Solve") {
+                    viewModel.solve()
                 }
-                Button("Reset Puzzle") {
+                Button("Reset") {
                     viewModel.reset()
                 }
             }

@@ -7,9 +7,13 @@
 
 import SwiftUI
 
-struct Piece: Identifiable {
+struct Piece: Identifiable, Equatable, Hashable {
     
     let id: String
     let elements: [Element]
-    let position = Position(row: 0, column: 0)
+    var position = Position(row: 0, column: 0)
+    
+    static func == (lhs: Piece, rhs: Piece) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
